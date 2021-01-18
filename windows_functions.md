@@ -27,7 +27,7 @@ WITH stg AS
 
 ```SQL
 
-ROW_NUMBER() OVER (ORDER BY s.num_of_voters DESC, s.street) AS rank
+RANK() OVER (ORDER BY s.num_of_voters DESC, s.street) AS rank
 
 ```
 

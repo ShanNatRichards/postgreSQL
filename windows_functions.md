@@ -29,7 +29,7 @@ ROW_NUMBER() OVER (ORDER BY s.num_of_voters DESC, s.street) AS rank
 
 ```
 
-3. With POSTGRES we can use the aggregrate function SUM as a windows function to get a running sum of voters
+3. With POSTGRES we can use the aggregrate function SUM as a windows function to get a running sum of voters.
     The ORDER BY clause indicates the order should be in descending order on the number of voters and then by the name of street (in case of ties).
 
 ```SQL
@@ -37,8 +37,13 @@ ROW_NUMBER() OVER (ORDER BY s.num_of_voters DESC, s.street) AS rank
 SUM(s.num_of_voters) OVER (ORDER BY s.num_of_voters DESC, s.street) AS running_sum_voters    
 
 ```
+4. We can also get the running total percentage of voters with another SUM windows function
 
-4. See the complete code
+```SQL
+SUM(a.pct_voters) OVER (ORDER BY a.pct_voters DESC, a.street) AS running_pct
+```
+
+5. See the complete code
 
 
 ```SQL
@@ -57,7 +62,7 @@ agg AS
            s.street,
            s.num_of_voters,
            SUM(s.num_of_voters) OVER (ORDER BY s.num_of_voters DESC, s.street) AS running_sum_voters,       
-           ROUND ((((s.num_of_voters) / sum(s.num_of_voters) OVER ()) * (100)), 2) AS pct_voters
+           ROUND ((((s.num_of_voters) / sum(s.num_of_voters) OVER ()) * (100)), 2) AS pct_voters           
     FROM stg s
 )
 
@@ -65,7 +70,8 @@ agg AS
      a.street,
      a.num_of_voters,
      a.running_sum_voters,
-     a.pct_voters     
+     a.pct_voters,
+     SUM(a.pct_voters) OVER (ORDER BY a.pct_voters DESC, a.street) AS running_pct
     FROM agg a;
 
 

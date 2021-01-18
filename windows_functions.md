@@ -2,7 +2,9 @@
 
 
 Using our sample registered voter dataset, let's use windows functions to describe voter distribution (by streets) in a district.
-See full code at the end
+See full code at the end.
+
+There are 1240 voters in this particularly voting district with 73 district streets.
 
 
 1. Let's first create a CTE that provides a count of the number of voters per distinct street, which will use in our windows functions
@@ -77,6 +79,13 @@ agg AS
 
 ```
 
+5. Results
 
+Of the 73 streets in our voting district, 50.55% of registered voters in the district live on only 14 of those streets. 
+
+If we look a little closely, we see that majority of those thoroughfares in the top 14 are roads. We could surmise that roads have more housing units than lanes (LN) or closes (CL). 
+
+
+![Windows Function Results](https://github.com/ShanNatRichards/postgreSQL/blob/main/images/voters.JPG)
 
 

@@ -31,13 +31,17 @@ Returning *;
 
 WITH RECURSIVE stg as (
 
-SELECT start_time, end_time, concat('>> ' , name, ' ', start_time, ' - ', end_time) as activity_plan
+SELECT start_time
+  , end_time
+  , concat('>> ' , name, ' ', start_time, ' - ', end_time) as activity_plan
 FROM tour_stops
 WHERE stop_id = 14
 
 UNION ALL
 
-SELECT t.start_time, t.end_time, concat(stg.activity_plan, '>> ', t.name, ' ', t.start_time, ' - ', t.end_time) as activity_plan 
+SELECT t.start_time
+  , t.end_time
+  , concat(stg.activity_plan, '>> ', t.name, ' ', t.start_time, ' - ', t.end_time) as activity_plan 
 FROM stg
 INNER JOIN tour_stops t on t.start_time > stg.end_time
 )
